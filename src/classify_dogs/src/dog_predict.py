@@ -24,9 +24,11 @@ from PIL import Image as PILImage
 
 
 import cv2
-# import cv2.aruco as aruco
+
+import sys
+sys.path.insert(0, '/opt/installer/open_cv/cv_bridge/lib/python3/dist-packages/') #cv_bridge with python3 (self-build)
 from cv_bridge import CvBridge, CvBridgeError
-# from cv_bridge.boost.cv_bridge_boost import getCvType
+
 #============#
 # PARAMETERS
 #============#
@@ -92,7 +94,7 @@ def ppp():
 
 def image_cb(data):
     print("image_cb")
-    print(data)
+    # print(data)
     bridge = CvBridge()
     try:
         cv_image = bridge.imgmsg_to_cv2(data, data.encoding)
@@ -105,37 +107,38 @@ def image_cb(data):
 
 if __name__ == "__main__":
     print('test')
+    print(torch.__version__)
     rospy.init_node("classify_dog_node")
 
     sub_img = rospy.Subscriber('publish_img', SensorImage, image_cb)
 
     rospy.spin()
 
-#     #=========#
-#     # 載入模型
-#     #=========#
-#     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-#     model_input = torch.load(MODEL_SAVE_PATH, map_location = torch.device(device))
-#     model_input.eval()
+    # #=========#
+    # # 載入模型
+    # #=========#
+    # device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    # model_input = torch.load(MODEL_SAVE_PATH, map_location = torch.device(device))
+    # model_input.eval()
 
 
-#     class_names = datasets.ImageFolder(os.path.join(IMG_FOLDER_PATH+'val')).classes
-#     print(class_names)
+    # class_names = datasets.ImageFolder(os.path.join(IMG_FOLDER_PATH+'val')).classes
+    # print(class_names)
     
-#     # # IMG_PATH = "/home/upup/transfer_learning_ws/dog_data/val/n02085620-Chihuahua/n02085620_4159.jpg"
-#     # # IMG_PATH = "/home/upup/transfer_learning_ws/dog_data/val/n02111889-Samoyed/n02111889_1444.jpg"
-#     # # IMG_PATH = "/home/upup/transfer_learning_ws/dog_data/val/n02105855-Shetland_sheepdog/n02105855_4048.jpg"
-#     IMG_PATH = "/home/upup/transfer_learning_ws/dog_data/val/n02116738-African_hunting_dog/n02116738_2020.jpg"
+    # # # IMG_PATH = "/home/upup/transfer_learning_ws/dog_data/val/n02085620-Chihuahua/n02085620_4159.jpg"
+    # # # IMG_PATH = "/home/upup/transfer_learning_ws/dog_data/val/n02111889-Samoyed/n02111889_1444.jpg"
+    # # # IMG_PATH = "/home/upup/transfer_learning_ws/dog_data/val/n02105855-Shetland_sheepdog/n02105855_4048.jpg"
+    # IMG_PATH = "/home/upup/transfer_learning_ws/dog_data/val/n02116738-African_hunting_dog/n02116738_2020.jpg"
  
-#     I = Image.open(IMG_PATH) 
-#     I.show()    
-#     # I.save('./save.png')
-#     I_array = np.array(I) #np.array(); np.asarray()
-#     # print(I.shape)
-#     print(I_array.shape)
+    # I = Image.open(IMG_PATH) 
+    # I.show()    
+    # # I.save('./save.png')
+    # I_array = np.array(I) #np.array(); np.asarray()
+    # # print(I.shape)
+    # print(I_array.shape)
 
-#     # print("当前模型准确率为：",model_input["epoch_acc"])
-#     ppp()
+    # # print("当前模型准确率为：",model_input["epoch_acc"])
+    # ppp()
    
 # #        
 
