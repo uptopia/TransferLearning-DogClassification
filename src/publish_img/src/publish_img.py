@@ -14,6 +14,9 @@
 
 #opencv 讀圖-> sensor_msgs -> PIL
 
+
+#/home/upup/TransferLearning-DogClassification/dog_data/val/n02105855-Shetland_sheepdog/n02105855_11876.jpg
+
 import rospy
 
 import sys
@@ -51,8 +54,14 @@ def read_file(img_path):
     msg.is_bigendian = False
     msg.step = 3 * im.width
     msg.data = np.array(im).tobytes()
-    while(1):
+    cnt = 0
+    state = 1
+    while(state):
         pub_img.publish(msg)
+        cnt+=1
+        if(cnt>1000):
+            state = 0
+
         print("pub DONE")
         
 def stream_webcam(data):
@@ -70,7 +79,7 @@ def stream_realsense():
 if __name__ == "__main__":
     
     rospy.init_node("img_node")
-    pub_img = rospy.Publisher('publish_img', SensorImage, queue_size = 10)
+    pub_img = rospy.Publisher('publish_img', SensorImage)#, queue_size = 10)
 
     print("Select image input method: [1]from file, [2]stream webcam, [3]stream Realsense")
     method_type = int(input())
