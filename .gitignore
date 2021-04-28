@@ -1,0 +1,9 @@
+.vscode
+
+*.jpg
+*build
+*devel
+*weights
+*.pth
+
+CATKIN_IGNORE
