@@ -30,7 +30,7 @@ $. devel/setup.bash
 $rosrun publish_img publish_img.py
 ```
 [1] img 
-[2] webcam (TODO)
+[2] webcam
 [3] realsense
 
 terminal 4

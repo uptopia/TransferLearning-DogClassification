@@ -64,17 +64,18 @@ def read_file(img_path):
 
         print("pub DONE")
         
-def stream_webcam(data):
-    print("[2] Stream webcam")
-    #https://www.ncnynl.com/archives/201703/1437.html
-
-def realsense_cb(data):
-    print("realsense_cb")
+def publish_img_cb(data):
     pub_img.publish(data)
 
+def stream_webcam():
+    print("[2] Stream webcam")
+    #$roslaunch usb_cam usb_cam-test.launch video_device:=/dev/video0
+    sub_markers = rospy.Subscriber('/usb_cam/image_raw', SensorImage, publish_img_cb)
+
 def stream_realsense():
+    #$roslaunch realsense2_camera rs_camera.launch
     print("[3] Stream Realsense")    
-    sub_markers = rospy.Subscriber('/camera/color/image_raw', SensorImage, realsense_cb)
+    sub_markers = rospy.Subscriber('/camera/color/image_raw', SensorImage, publish_img_cb)
  
 if __name__ == "__main__":
     
@@ -99,3 +100,8 @@ if __name__ == "__main__":
         print("ERROR! Wrong input image method_type!")
     
     rospy.spin()
+
+
+    #References:
+    #https://www.ncnynl.com/archives/201703/1437.html
+    #https://blog.csdn.net/dengheCSDN/article/details/78983993
